@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Taş Dağıtıcı</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        input, button {
+            padding: 8px;
+            font-size: 16px;
+        }
+        #sonuc {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 350px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .fazla {
+            background-color: #d4edda; /* açık yeşil */
+            color: #155724;
+        }
+        .normal {
+            background-color: #d1ecf1; /* açık mavi */
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>79 Taş Dağıtıcı</h2>
+    <label for="kisiSayisi">Kişi sayısını girin:</label>
+    <input type="number" id="kisiSayisi" min="1">
+    <button onclick="tasDagit()">Dağıt</button>
+
+    <div id="sonuc"></div>
+
+    <script>
+        function tasDagit() {
+            const toplamTas = 79;
+            const kisiSayisi = parseInt(document.getElementById("kisiSayisi").value);
+            const sonucDiv = document.getElementById("sonuc");
+            sonucDiv.innerHTML = "";
+
+            if (!kisiSayisi || kisiSayisi < 1) {
+                sonucDiv.innerHTML = "Lütfen geçerli bir kişi sayısı girin.";
+                return;
+            }
+
+            const tasKisiye = Math.floor(toplamTas / kisiSayisi);
+            const kalanTas = toplamTas % kisiSayisi;
+
+            let mesaj = `<p>Toplam <strong>${toplamTas}</strong> taş, <strong>${kisiSayisi}</strong> kişiye dağıtılıyor.</p>`;
+            mesaj += `<p>İlk <strong>${kalanTas}</strong> kişiye <strong>${tasKisiye + 1}</strong> taş, kalan <strong>${kisiSayisi - kalanTas}</strong> kişiye <strong>${tasKisiye}</strong> taş verilir.</p>`;
+
+            mesaj += `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kişi</th>
+                            <th>Taş Sayısı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            for (let i = 1; i <= kisiSayisi; i++) {
+                const tasSayisi = i <= kalanTas ? tasKisiye + 1 : tasKisiye;
+                const renkClass = i <= kalanTas ? "fazla" : "normal";
+                mesaj += `<tr class="${renkClass}"><td>${i}</td><td>${tasSayisi}</td></tr>`;
+            }
+
+            mesaj += `</tbody></table>`;
+            sonucDiv.innerHTML = mesaj;
+        }
+    </script>
+
+</body>
+</html>
