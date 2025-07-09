@@ -2,24 +2,63 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taş Dağıtıcı</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
+            margin: 20px;
+            padding: 0;
+            max-width: 100%;
+            box-sizing: border-box;
         }
-        input, button {
-            padding: 8px;
-            font-size: 16px;
+        h2 {
+            font-size: 1.5rem;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            max-width: 400px;
+        }
+        label {
+            font-size: 1rem;
+        }
+        input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 150px;
+        }
+        button:hover {
+            background-color: #45a049;
         }
         #sonuc {
             margin-top: 20px;
-            font-size: 18px;
+            font-size: 1rem;
+            word-wrap: break-word;
         }
         table {
             margin-top: 20px;
             border-collapse: collapse;
-            width: 350px;
+            width: 100%;
+            max-width: 350px;
+            overflow-x: auto;
+            display: block;
         }
         th, td {
             border: 1px solid #ccc;
@@ -30,21 +69,33 @@
             background-color: #f2f2f2;
         }
         .fazla {
-            background-color: #d4edda; /* açık yeşil */
+            background-color: #d4edda;
             color: #155724;
         }
         .normal {
-            background-color: #d1ecf1; /* açık mavi */
+            background-color: #d1ecf1;
             color: #0c5460;
+        }
+        @media (min-width: 600px) {
+            .input-container {
+                flex-direction: row;
+                align-items: center;
+            }
+            input {
+                width: auto;
+                max-width: 100px;
+            }
         }
     </style>
 </head>
 <body>
 
     <h2>79 Taş Dağıtıcı</h2>
-    <label for="kisiSayisi">Kişi sayısını girin:</label>
-    <input type="number" id="kisiSayisi" min="1">
-    <button onclick="tasDagit()">Dağıt</button>
+    <div class="input-container">
+        <label for="kisiSayisi">Kişi sayısını girin:</label>
+        <input type="number" id="kisiSayisi" min="1">
+        <button onclick="tasDagit()">Dağıt</button>
+    </div>
 
     <div id="sonuc"></div>
 
@@ -67,6 +118,7 @@
             mesaj += `<p>İlk <strong>${kalanTas}</strong> kişiye <strong>${tasKisiye + 1}</strong> taş, kalan <strong>${kisiSayisi - kalanTas}</strong> kişiye <strong>${tasKisiye}</strong> taş verilir.</p>`;
 
             mesaj += `
+                <div style="overflow-x:auto;">
                 <table>
                     <thead>
                         <tr>
@@ -83,7 +135,7 @@
                 mesaj += `<tr class="${renkClass}"><td>${i}</td><td>${tasSayisi}</td></tr>`;
             }
 
-            mesaj += `</tbody></table>`;
+            mesaj += `</tbody></table></div>`;
             sonucDiv.innerHTML = mesaj;
         }
     </script>
